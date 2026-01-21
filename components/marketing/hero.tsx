@@ -66,7 +66,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6"
           >
             <Sparkles className="w-4 h-4" />
-            Phoenix Metro&apos;s #1 Laundry Service
+            Arizona&apos;s #1 Laundry Service
           </motion.div>
 
           {/* Headline */}
