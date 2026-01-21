@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Shirt,
@@ -18,24 +19,28 @@ const services = [
     title: "Wash & Fold",
     description: "Your everyday laundry washed, dried, and neatly folded. Starting at $2.25/lb.",
     color: "bg-primary/10 text-primary",
+    href: "/phoenix/wash-and-fold",
   },
   {
     icon: Sparkles,
     title: "Dry Cleaning",
     description: "Professional cleaning for suits, dresses, and delicate garments.",
     color: "bg-accent/10 text-accent",
+    href: "/phoenix/dry-cleaning",
   },
   {
     icon: Bed,
     title: "Bedding & Linens",
     description: "Comforters, sheets, towels, and tablecloths—crisp and fresh.",
     color: "bg-fresh/10 text-fresh",
+    href: "/phoenix/bedding-cleaning",
   },
   {
     icon: Building2,
     title: "Commercial",
     description: "Bulk solutions for apartments, hotels, restaurants, and gyms.",
     color: "bg-wave/10 text-wave",
+    href: "/commercial",
   },
 ];
 
@@ -103,17 +108,21 @@ export function Features() {
             <motion.div
               key={service.title}
               variants={itemVariants}
-              className="card-elevated p-6 text-center group cursor-pointer"
             >
-              <div
-                className={`inline-flex items-center justify-center w-14 h-14 rounded-xl ${service.color} mb-4 transition-transform group-hover:scale-110`}
+              <Link
+                href={service.href}
+                className="card-elevated p-6 text-center group cursor-pointer block h-full hover:shadow-lg transition-shadow"
               >
-                <service.icon className="w-7 h-7" />
-              </div>
-              <h3 className="text-lg font-display font-semibold text-foreground mb-2">
-                {service.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">{service.description}</p>
+                <div
+                  className={`inline-flex items-center justify-center w-14 h-14 rounded-xl ${service.color} mb-4 transition-transform group-hover:scale-110`}
+                >
+                  <service.icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-lg font-display font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground">{service.description}</p>
+              </Link>
             </motion.div>
           ))}
         </motion.div>

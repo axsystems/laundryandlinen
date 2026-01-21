@@ -12,6 +12,7 @@ export interface Location {
   neighborhoodsServed?: string[];
   landmarks?: string[];
   description: string;
+  serviceDays?: string[]; // Limited service days (e.g., ["Monday", "Wednesday", "Friday"])
 }
 
 export interface ServiceLocation {
@@ -355,6 +356,21 @@ export const LOCATIONS: Location[] = [
     neighborhoodsServed: ["Youngtown"],
     landmarks: ["Youngtown Park"],
     description: "Arizona's first retirement community, offering quiet living near Sun City.",
+  },
+
+  // === EXTENDED SERVICE AREAS ===
+  {
+    slug: "wickenburg",
+    name: "Wickenburg",
+    county: "Maricopa",
+    region: "Northwest Valley",
+    zipCodes: ["85390"],
+    coordinates: { lat: 33.9687, lng: -112.7296 },
+    population: 8000,
+    neighborhoodsServed: ["Downtown Wickenburg", "Wickenburg Ranch", "Los Caballeros"],
+    landmarks: ["Desert Caballeros Western Museum", "Vulture Mine", "Hassayampa River Preserve"],
+    description: "A historic Old West town known for dude ranches, western heritage, and stunning desert scenery.",
+    serviceDays: ["Monday", "Wednesday", "Friday"],
   },
 ];
 
