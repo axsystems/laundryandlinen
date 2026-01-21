@@ -118,34 +118,41 @@ export default async function CityPage({ params }: PageProps) {
                 {content.intro}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild variant="accent" size="lg">
-                  <Link href="/order" className="group">
-                    Schedule Free Pickup
-                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg">
-                  <a href={`tel:${BUSINESS_INFO.phone.replace(/\D/g, "")}`}>
-                    <Phone className="w-5 h-5 mr-2" />
-                    {BUSINESS_INFO.phone}
-                  </a>
-                </Button>
-              </div>
+              {/* Buttons + Trust Badges */}
+              <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-8">
+                {/* Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button asChild variant="accent" size="lg">
+                    <Link href="/order" className="group">
+                      Schedule Free Pickup
+                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <a href={`tel:${BUSINESS_INFO.phone.replace(/\D/g, "")}`}>
+                      <Phone className="w-5 h-5 mr-2" />
+                      {BUSINESS_INFO.phone}
+                    </a>
+                  </Button>
+                </div>
 
-              {/* Trust Badges */}
-              <div className="flex flex-wrap gap-6 mt-8">
-                <div className="flex items-center gap-2 text-sm">
-                  <Truck className="w-5 h-5 text-primary" />
-                  <span>Free Pickup & Delivery</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Clock className="w-5 h-5 text-primary" />
-                  <span>24-48hr Turnaround</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Star className="w-5 h-5 text-primary" />
-                  <span>4.9/5 Customer Rating</span>
+                {/* Divider */}
+                <div className="hidden lg:block w-px h-10 bg-border" />
+
+                {/* Trust Badges */}
+                <div className="flex flex-wrap gap-4 lg:gap-6">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Truck className="w-5 h-5 text-primary" />
+                    <span>Free Pickup & Delivery</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Clock className="w-5 h-5 text-primary" />
+                    <span>24-48hr Turnaround</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Star className="w-5 h-5 text-primary" />
+                    <span>4.9/5 Customer Rating</span>
+                  </div>
                 </div>
               </div>
 

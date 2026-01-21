@@ -91,40 +91,41 @@ export function Hero() {
             up, clean, and deliver—so you can spend time on what matters.
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons + Trust badges */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+            className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8"
           >
-            <Button asChild variant="accent" size="xl">
-              <Link href="/order" className="group">
-                Schedule Pickup
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="xl">
-              <Link href="/pricing">View Pricing</Link>
-            </Button>
-          </motion.div>
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <Button asChild variant="accent" size="xl">
+                <Link href="/order" className="group">
+                  Schedule Pickup
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="xl">
+                <Link href="/pricing">View Pricing</Link>
+              </Button>
+            </div>
 
-          {/* Trust badges */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-6 md:gap-8"
-          >
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 text-sm text-muted-foreground"
-              >
-                <feature.icon className="w-5 h-5 text-primary" />
-                <span>{feature.text}</span>
-              </div>
-            ))}
+            {/* Divider */}
+            <div className="hidden lg:block w-px h-12 bg-border" />
+
+            {/* Trust badges */}
+            <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-6">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  <feature.icon className="w-5 h-5 text-primary" />
+                  <span>{feature.text}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
