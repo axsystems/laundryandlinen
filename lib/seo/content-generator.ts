@@ -101,24 +101,31 @@ function seededItem<T>(arr: T[], random: () => number): T {
 // Generate city page content
 export function generateCityPageContent(location: Location) {
   const random = seededRandom(location.slug);
-  const neighborhoods = location.neighborhoodsServed?.slice(0, 4).join(", ") || location.name;
 
-  const intro = seededItem(INTRO_TEMPLATES, random)
-    .replace(/{city}/g, location.name)
-    .replace(/{brand}/g, BUSINESS_INFO.name)
-    .replace(/{region}/g, location.region)
-    .replace(/{neighborhoods}/g, neighborhoods);
+  // Use unique intro if available, otherwise fall back to template
+  const intro = location.uniqueIntro || (() => {
+    const neighborhoods = location.neighborhoodsServed?.slice(0, 4).join(", ") || location.name;
+    return seededItem(INTRO_TEMPLATES, random)
+      .replace(/{city}/g, location.name)
+      .replace(/{brand}/g, BUSINESS_INFO.name)
+      .replace(/{region}/g, location.region)
+      .replace(/{neighborhoods}/g, neighborhoods);
+  })();
 
-  const whyChoose = seededItem(WHY_CHOOSE_TEMPLATES, random)
-    .replace(/{city}/g, location.name)
-    .replace(/{brand}/g, BUSINESS_INFO.name);
+  const whyChoose = location.whyLaundryService
+    ? `Why ${location.name} Residents Need Laundry Service`
+    : seededItem(WHY_CHOOSE_TEMPLATES, random)
+        .replace(/{city}/g, location.name)
+        .replace(/{brand}/g, BUSINESS_INFO.name);
 
   const cta = seededItem(CTA_TEMPLATES, random)
     .replace(/{city}/g, location.name)
     .replace(/{brand}/g, BUSINESS_INFO.name);
 
-  // Select 6 random benefits
-  const shuffledBenefits = [...BENEFITS].sort(() => random() - 0.5).slice(0, 6);
+  // Use whyLaundryService as first benefit if available, then add standard benefits
+  const shuffledBenefits = location.whyLaundryService
+    ? [location.whyLaundryService, ...[...BENEFITS].sort(() => random() - 0.5).slice(0, 5)]
+    : [...BENEFITS].sort(() => random() - 0.5).slice(0, 6);
 
   const nearbyCities = getNearbyCities(location.slug, 5);
 
@@ -129,6 +136,10 @@ export function generateCityPageContent(location: Location) {
     cta,
     nearbyCities,
     services: SERVICES_FOR_SEO,
+    // New unique content fields
+    demographics: location.demographics,
+    localBusinesses: location.localBusinesses,
+    funFact: location.funFact,
   };
 }
 

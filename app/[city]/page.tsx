@@ -243,6 +243,18 @@ export default async function CityPage({ params }: PageProps) {
                 </h3>
                 <p className="text-muted-foreground mb-4">{location.description}</p>
 
+                {/* Demographics */}
+                {content.demographics && (
+                  <div className="mb-4 p-4 rounded-lg bg-primary/5 border border-primary/10">
+                    <h4 className="font-semibold text-foreground mb-2">
+                      Who We Serve in {location.name}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {content.demographics}
+                    </p>
+                  </div>
+                )}
+
                 {location.neighborhoodsServed && (
                   <div className="mb-4">
                     <h4 className="font-semibold text-foreground mb-2">
@@ -255,6 +267,25 @@ export default async function CityPage({ params }: PageProps) {
                           className="px-3 py-1 bg-secondary rounded-full text-sm"
                         >
                           {hood}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Local Businesses */}
+                {content.localBusinesses && content.localBusinesses.length > 0 && (
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-foreground mb-2">
+                      Local Businesses We Serve:
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {content.localBusinesses.map((business) => (
+                        <span
+                          key={business}
+                          className="px-3 py-1 bg-wave/10 text-wave rounded-full text-sm"
+                        >
+                          {business}
                         </span>
                       ))}
                     </div>
@@ -274,6 +305,16 @@ export default async function CityPage({ params }: PageProps) {
                   <p className="text-sm text-muted-foreground">
                     Serving over {location.population.toLocaleString()} residents
                   </p>
+                )}
+
+                {/* Fun Fact */}
+                {content.funFact && (
+                  <div className="mt-4 p-4 rounded-lg bg-fresh/10 border border-fresh/20">
+                    <p className="text-sm text-foreground">
+                      <span className="font-semibold">Did you know?</span>{" "}
+                      {content.funFact}
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
