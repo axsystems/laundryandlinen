@@ -10,6 +10,7 @@ import {
   isZipCodeServiceable,
   getRegionByZipCode,
 } from "@/lib/constants/service-areas";
+import { LOCATIONS, getLocationsByRegion } from "@/lib/constants/locations";
 
 export default function AreasPage() {
   const [zipCode, setZipCode] = useState("");
@@ -129,49 +130,91 @@ export default function AreasPage() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {Object.values(SERVICE_REGIONS).map((region) => (
-              <div key={region.id} className="card-elevated p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-primary" />
+            {Object.values(SERVICE_REGIONS).map((region) => {
+              const regionLocations = LOCATIONS.filter(
+                (loc) => loc.region === region.name
+              );
+              return (
+                <div key={region.id} className="card-elevated p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-display font-bold text-foreground">
+                      {region.name}
+                    </h3>
                   </div>
-                  <h3 className="text-xl font-display font-bold text-foreground">
-                    {region.name}
-                  </h3>
-                </div>
 
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-muted-foreground mb-2">
-                    Cities Served:
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {region.cities.map((city) => (
-                      <span
-                        key={city}
-                        className="px-3 py-1 bg-secondary rounded-full text-sm"
-                      >
-                        {city}
-                      </span>
-                    ))}
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-muted-foreground mb-2">
+                      Cities Served:
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {regionLocations.map((location) => (
+                        <Link
+                          key={location.slug}
+                          href={`/${location.slug}`}
+                          className="px-3 py-1 bg-secondary rounded-full text-sm hover:bg-primary/10 hover:text-primary transition-colors"
+                        >
+                          {location.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground mb-2">
+                      ZIP Codes:
+                    </h4>
+                    <div className="flex flex-wrap gap-1">
+                      {region.zipCodes.slice(0, 10).map((zip) => (
+                        <Link
+                          key={zip}
+                          href={`/service-area/${zip}`}
+                          className="text-sm text-muted-foreground hover:text-primary"
+                        >
+                          {zip}
+                        </Link>
+                      ))}
+                      {region.zipCodes.length > 10 && (
+                        <span className="text-sm text-muted-foreground">
+                          +{region.zipCodes.length - 10} more
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-                <div>
-                  <h4 className="text-sm font-semibold text-muted-foreground mb-2">
-                    ZIP Codes:
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    {region.zipCodes.join(", ")}
-                  </p>
-                </div>
-              </div>
+      {/* All Cities */}
+      <section className="section-padding bg-secondary/30">
+        <div className="container-custom">
+          <h2 className="text-3xl font-display font-bold text-foreground text-center mb-8">
+            All Service Cities
+          </h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
+            {LOCATIONS.map((location) => (
+              <Link
+                key={location.slug}
+                href={`/${location.slug}`}
+                className="p-4 rounded-lg bg-white border border-border hover:border-primary/50 hover:shadow-md transition-all text-center group"
+              >
+                <p className="font-medium text-foreground group-hover:text-primary transition-colors">
+                  {location.name}
+                </p>
+                <p className="text-xs text-muted-foreground">{location.region}</p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* Map placeholder */}
-      <section className="section-padding bg-secondary/30">
+      <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-display font-bold text-foreground text-center mb-8">
