@@ -100,7 +100,7 @@ export function Hero() {
           >
             <Button asChild variant="accent" size="xl">
               <Link href="/order" className="group">
-                Schedule Free Pickup
+                Schedule Pickup
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
