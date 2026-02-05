@@ -27,6 +27,7 @@ import {
   generateFAQs,
 } from "@/lib/seo/content-generator";
 import { generateCityPageSchema } from "@/lib/seo/schema";
+import { INDUSTRIES } from "@/lib/constants/industries";
 
 interface PageProps {
   params: Promise<{ city: string }>;
@@ -345,6 +346,38 @@ export default async function CityPage({ params }: PageProps) {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Commercial Services */}
+        <section className="section-padding bg-secondary/30">
+          <div className="container-custom">
+            <div className="text-center mb-8">
+              <Building2 className="w-10 h-10 text-primary mx-auto mb-4" />
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
+                Commercial Laundry in {location.name}
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                We serve {location.name} businesses with professional commercial laundry solutions.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              {INDUSTRIES.slice(0, 4).map((industry) => (
+                <Link
+                  key={industry.slug}
+                  href={`/commercial/${industry.slug}/${location.slug}`}
+                  className="p-4 rounded-lg bg-white border border-border hover:border-primary/50 hover:shadow-md transition-all text-center"
+                >
+                  <p className="font-medium text-foreground">{industry.shortName}</p>
+                  <p className="text-xs text-muted-foreground">in {location.name}</p>
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-6">
+              <Link href="/commercial" className="text-primary hover:underline inline-flex items-center gap-1">
+                View all commercial services <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>

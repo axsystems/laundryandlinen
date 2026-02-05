@@ -10,11 +10,22 @@ const footerLinks = {
     { href: "/services#bedding", label: "Bedding & Linens" },
     { href: "/commercial", label: "Commercial" },
   ],
+  commercial: [
+    { href: "/commercial/hotels", label: "Hotels & Resorts" },
+    { href: "/commercial/airbnb", label: "Airbnb & Vacation Rentals" },
+    { href: "/commercial/restaurants", label: "Restaurants" },
+    { href: "/commercial/apartments", label: "Apartments" },
+    { href: "/commercial/gyms", label: "Gyms & Fitness" },
+    { href: "/commercial/salons-spas", label: "Salons & Spas" },
+    { href: "/commercial/healthcare", label: "Healthcare" },
+    { href: "/commercial/event-venues", label: "Event Venues" },
+  ],
   company: [
     { href: "/about", label: "About Us" },
     { href: "/how-it-works", label: "How It Works" },
     { href: "/pricing", label: "Pricing" },
     { href: "/areas", label: "Service Areas" },
+    { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },
   ],
   legal: [
@@ -29,7 +40,7 @@ export function Footer() {
   return (
     <footer className="bg-ocean-dark text-white">
       <div className="container-custom section-padding">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -75,6 +86,23 @@ export function Footer() {
             <h3 className="font-display font-semibold text-lg mb-4">Services</h3>
             <ul className="space-y-2">
               {footerLinks.services.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/70 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Commercial Column */}
+          <div>
+            <h3 className="font-display font-semibold text-lg mb-4">Commercial</h3>
+            <ul className="space-y-2">
+              {footerLinks.commercial.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

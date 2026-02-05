@@ -9,6 +9,7 @@ import {
   Truck,
   Clock,
   Star,
+  Building2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +20,7 @@ import {
 } from "@/lib/constants/locations";
 import { BUSINESS_INFO } from "@/lib/constants/service-areas";
 import { generateLocalBusinessSchema, generateBreadcrumbSchema } from "@/lib/seo/schema";
+import { generateZipPageContent } from "@/lib/seo/content-generator";
 
 interface PageProps {
   params: Promise<{ zip: string }>;
@@ -64,6 +66,8 @@ export default async function ZipCodePage({ params }: PageProps) {
   if (!primaryLocation) {
     notFound();
   }
+
+  const zipContent = generateZipPageContent(zip, primaryLocation);
 
   const schemas = [
     generateLocalBusinessSchema(primaryLocation),
@@ -115,9 +119,7 @@ export default async function ZipCodePage({ params }: PageProps) {
               </div>
 
               <p className="text-lg text-muted-foreground mb-8 max-w-3xl">
-                Yes, we deliver to ZIP code {zip}! {BUSINESS_INFO.name} provides professional
-                laundry pickup and delivery service throughout {primaryLocation.name} and
-                the {primaryLocation.region} area. Schedule your free pickup today.
+                {zipContent.intro}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -276,6 +278,24 @@ export default async function ZipCodePage({ params }: PageProps) {
           </div>
         </section>
 
+        {/* Neighborhoods */}
+        {zipContent.neighborhoods.length > 0 && (
+          <section className="section-padding">
+            <div className="container-custom">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground text-center mb-8">
+                Neighborhoods We Serve in {primaryLocation.name}
+              </h2>
+              <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+                {zipContent.neighborhoods.map((hood) => (
+                  <span key={hood} className="px-4 py-2 bg-white rounded-full text-sm border border-border">
+                    {hood}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Nearby ZIP Codes */}
         <section className="section-padding">
           <div className="container-custom">
@@ -303,6 +323,43 @@ export default async function ZipCodePage({ params }: PageProps) {
                 View all {primaryLocation.name} services
                 <ArrowRight className="w-4 h-4" />
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="section-padding bg-secondary/30">
+          <div className="container-custom">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground text-center mb-8">
+                FAQs for ZIP Code {zip}
+              </h2>
+              <div className="space-y-4">
+                {zipContent.faqs.map((faq, i) => (
+                  <div key={i} className="card-elevated p-6">
+                    <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
+                    <p className="text-muted-foreground">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Commercial Services */}
+        <section className="section-padding">
+          <div className="container-custom">
+            <div className="max-w-3xl mx-auto text-center">
+              <Building2 className="w-10 h-10 text-primary mx-auto mb-4" />
+              <h2 className="text-2xl font-display font-bold text-foreground mb-4">
+                Business in {zip}?
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                We offer commercial laundry services for hotels, restaurants, gyms, and more in {primaryLocation.name}.
+              </p>
+              <Button asChild variant="outline">
+                <Link href="/commercial">Learn About Commercial Services</Link>
+              </Button>
             </div>
           </div>
         </section>

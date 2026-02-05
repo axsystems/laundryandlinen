@@ -114,6 +114,11 @@ export function Testimonials() {
           ))}
         </motion.div>
 
+        {/* Disclosure */}
+        <p className="text-xs text-muted-foreground text-center mt-8">
+          Testimonials reflect individual experiences and may not be representative of all customers. Results may vary.
+        </p>
+
         {/* Stats */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[

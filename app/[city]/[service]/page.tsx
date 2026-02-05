@@ -9,6 +9,7 @@ import {
   Clock,
   Star,
   Sparkles,
+  Building2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -269,6 +270,44 @@ export default async function CityServicePage({ params }: PageProps) {
           </div>
         </section>
 
+        {/* How It Works */}
+        {content.processSteps && (
+          <section className="section-padding bg-secondary/30">
+            <div className="container-custom">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground text-center mb-12">
+                How {serviceInfo.shortName} Works in {location.name}
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                {content.processSteps.map((step, i) => (
+                  <div key={i} className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 font-bold text-lg">
+                      {i + 1}
+                    </div>
+                    <h3 className="font-display font-semibold text-foreground mb-2">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground">{step.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* What to Expect */}
+        {content.whatToExpect && (
+          <section className="section-padding">
+            <div className="container-custom">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
+                  What to Expect from {serviceInfo.shortName} in {location.name}
+                </h2>
+                <p className="text-muted-foreground leading-relaxed">
+                  {content.whatToExpect}
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Areas Served */}
         <section className="section-padding bg-secondary/30">
           <div className="container-custom">
@@ -358,6 +397,26 @@ export default async function CityServicePage({ params }: PageProps) {
             </div>
           </div>
         </section>
+
+        {/* Commercial Cross-Link */}
+        {content.hasCommercialCrossLink && (
+          <section className="section-padding bg-secondary/30">
+            <div className="container-custom">
+              <div className="max-w-3xl mx-auto text-center">
+                <Building2 className="w-10 h-10 text-primary mx-auto mb-4" />
+                <h2 className="text-2xl font-display font-bold text-foreground mb-4">
+                  Need Commercial {serviceInfo.shortName} in {location.name}?
+                </h2>
+                <p className="text-muted-foreground mb-6">
+                  We offer dedicated commercial laundry solutions with volume pricing, dedicated account management, and flexible scheduling.
+                </p>
+                <Button asChild variant="outline">
+                  <Link href="/commercial">Explore Commercial Services</Link>
+                </Button>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* CTA Section */}
         <section className="section-padding bg-primary text-white">

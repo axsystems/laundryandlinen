@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { LOCATIONS, SERVICES_FOR_SEO } from "@/lib/constants/locations";
+import { INDUSTRIES } from "@/lib/constants/industries";
+import { BLOG_POSTS } from "@/lib/constants/blog-posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl =
@@ -96,5 +98,50 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...cityPages, ...cityServicePages, ...zipCodePages];
+  // Commercial industry landing pages (8 pages)
+  const industryPages: MetadataRoute.Sitemap = INDUSTRIES.map((industry) => ({
+    url: `${baseUrl}/commercial/${industry.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  // Commercial industry + city pages (8 industries × 28 cities = 224 pages)
+  const industryCityPages: MetadataRoute.Sitemap = INDUSTRIES.flatMap((industry) =>
+    LOCATIONS.map((location) => ({
+      url: `${baseUrl}/commercial/${industry.slug}/${location.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }))
+  );
+
+  // Blog index
+  const blogIndex: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    },
+  ];
+
+  // Blog posts (25 pages)
+  const blogPostPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.updatedAt || post.publishedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [
+    ...staticPages,
+    ...cityPages,
+    ...cityServicePages,
+    ...zipCodePages,
+    ...industryPages,
+    ...industryCityPages,
+    ...blogIndex,
+    ...blogPostPages,
+  ];
 }
